@@ -14,6 +14,7 @@ if [ -f "./daemon_stock_monitor.sh" ]; then
     # 2. Launch in Background (Daemon Mode)
     # nohup: Keeps it running even if terminal closes
     # > /dev/null: Silences output (daemons shouldn't speak to screen)
+    # 2>&1: Silences error as well (error goes to same place as output)
     # &: Puts it in background
     nohup ./daemon_stock_monitor.sh > /dev/null 2>&1 &
     
@@ -33,7 +34,9 @@ login_user() {
     # Dummy authentication logic for demonstration
     if  grep -q "$username:$password" ./admins.txt 
     then
+        clear
         echo "Login successful! Welcome, $username."
+        sleep 2
         ./adminprogram.sh
     else
         echo "Login failed! Invalid username or password."
@@ -41,8 +44,8 @@ login_user() {
 }
 
 while true
+clear
 do
-    clear
     echo "===================================="
     echo "      Supermarket OS Login Menu     "
     echo "===================================="
@@ -73,6 +76,9 @@ do
         *) echo "Please choose a valid option."
             ;;
     esac
+    
+    echo "Press any button to continue..."
+    read temp
 
 done
 

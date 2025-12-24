@@ -9,8 +9,8 @@ trap handle_alert SIGUSR1
 
 while true
 do
-
     clear
+
     echo "========================================"
     echo "   STORE ADMIN DASHBOARD (Logged In)"
     echo "========================================"
@@ -23,7 +23,7 @@ do
     echo "7. EMERGENCY STOP (Signal Broadcast)"
     echo "8. Generate Zombie and Orphan Processes"
     echo "9. Kill all Zombie and Orphan Processes"
-    echo "10. Logout"
+    echo "10. Return to Main Menu"
     read option
 
     case $option in
@@ -86,5 +86,7 @@ do
 
     esac
 
+    echo "Press any button to continue..."
+    read temp
 
 done
