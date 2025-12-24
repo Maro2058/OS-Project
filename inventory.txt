@@ -1,3 +1,100 @@
-1:Pepsi Can:100
-2:Chips:50
-3:Cornflakes:3
+1:milk:20
+2:bread:10
+3:eggs:30
+4:butter:2
+5:cheese:5
+6:yogurt:1
+7:cream:4
+8:apples:2
+9:bananas:1
+10:oranges:0
+11:grapes:3
+12:strawberries:8
+13:tomatoes:20
+14:onions:1
+15:potatoes:4
+16:carrots:2
+17:lettuce:3
+18:cucumbers:1
+19:broccoli:5
+20:spinach:2
+21:rice:9
+22:pasta:3
+23:flour:2
+24:sugar:1
+25:salt:1
+26:pepper:4
+27:cooking oil:6
+28:olive oil:12
+29:vinegar:3
+30:soy sauce:7
+31:ketchup:4
+32:mustard:2
+33:mayonnaise:6
+34:canned beans:5
+35:canned corn:3
+36:canned tuna:8
+37:tomato sauce:4
+38:soup:6
+39:chicken:2
+40:beef:5
+41:pork:7
+42:sausages:4
+43:bacon:6
+44:fish:3
+45:shrimp:10
+46:frozen pizza:8
+47:frozen vegetables:5
+48:ice cream:14
+49:cereal:4
+50:oatmeal:3
+51:granola:6
+52:crackers:5
+53:chips:7
+54:popcorn:9
+55:chocolate:11
+56:candy:8
+57:biscuits:4
+58:cookies:6
+59:cake:10
+60:muffins:12
+61:coffee:5
+62:tea:3
+63:juice:6
+64:soda:7
+65:water:10
+66:sparkling water:4
+67:energy drinks:15
+68:paper towels:3
+69:toilet paper:2
+70:napkins:1
+71:aluminum foil:4
+72:plastic wrap:3
+73:detergent:9
+74:fabric softener:6
+75:dish soap:4
+76:sponges:3
+77:trash bags:7
+78:hand soap:2
+79:shampoo:8
+80:conditioner:6
+81:toothpaste:3
+82:toothbrush:2
+83:deodorant:7
+84:razors:10
+85:shaving cream:8
+86:baby wipes:4
+87:diapers:18
+88:pet food:9
+89:cat litter:7
+90:light bulbs:5
+91:batteries:12
+92:matches:200
+93:charcoal:14
+94:paper plates:40
+95:plastic cups:6
+96:plastic cutlery:5
+97:salad dressing:7
+98:honey:16
+99:jam:6
+100:peanut butter:11

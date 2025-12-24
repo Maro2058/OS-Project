@@ -1,2 +1,42 @@
-
-3:Cornflakes:3
+4:butter:2
+6:yogurt:1
+7:cream:4
+8:apples:2
+9:bananas:1
+10:oranges:0
+11:grapes:3
+14:onions:1
+15:potatoes:4
+16:carrots:2
+17:lettuce:3
+18:cucumbers:1
+20:spinach:2
+22:pasta:3
+23:flour:2
+24:sugar:1
+25:salt:1
+26:pepper:4
+29:vinegar:3
+31:ketchup:4
+32:mustard:2
+35:canned corn:3
+37:tomato sauce:4
+39:chicken:2
+42:sausages:4
+44:fish:3
+49:cereal:4
+50:oatmeal:3
+57:biscuits:4
+62:tea:3
+66:sparkling water:4
+68:paper towels:3
+69:toilet paper:2
+70:napkins:1
+71:aluminum foil:4
+72:plastic wrap:3
+75:dish soap:4
+76:sponges:3
+78:hand soap:2
+81:toothpaste:3
+82:toothbrush:2
+86:baby wipes:4
