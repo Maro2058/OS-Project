@@ -40,3 +40,6 @@
 81:toothpaste:3
 82:toothbrush:2
 86:baby wipes:4
+1:Pepsi:4:10.00
+-395128495:Vitamin B Complex:4:200.00
+6223012483409:Vitamin B Complex:4:200.00

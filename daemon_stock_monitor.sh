@@ -28,7 +28,7 @@ do
 
     # Read the inventory file line by line
     # We feed the file into the loop at the very bottom using '<'
-    while IFS=':' read -r id name quantity
+    while IFS=':' read -r id name quantity price
     do
     now=$(date "+%H:%M:%S")
         # Skip empty lines to prevent errors
@@ -39,7 +39,7 @@ do
             if ! grep -q "^$id:$name:" "$LOW_STOCK_ITEMS"; then
                 # Log only because it's a NEW alert
                 echo "[$now] ALERT: Low stock for '$name' | $quantity left." >> "$LOG_FILE"
-                echo "$id:$name:$quantity" >> "$LOW_STOCK_ITEMS" 
+                echo "$id:$name:$quantity:$price" >> "$LOW_STOCK_ITEMS" 
             fi
         # Check if quantity > 5)
         elif [ "$quantity" -ge $cutoff ]; then

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-function call_for_assistance() {
+call_for_assistance() {
     echo -e "\n\n!!! EMERGENCY ASSISTANCE REQUESTED !!!"
     echo "Alerting Store Manager..."
     
@@ -17,6 +17,30 @@ function call_for_assistance() {
 
 trap call_for_assistance SIGINT
 
+display_products() {
+    
+    if [ ! -f "inventory.txt" ]; then
+        echo "[ERROR] Inventory file not found!"
+        return
+    fi
+    
+    echo -e "Items are viewed in this format \n"
+    echo -e "\nID\t| NAME\t| STOCK\t| PRICE\n"
+    echo "----------------------------------------------------"
+    # IFS=':' tells Bash to split the line at the colons
+    while IFS=':' read -r id name quantity price
+    do
+        # Skip empty lines
+        if [ -z "$id" ]; then
+            continue
+        fi
+
+        printf "%s\t| %s\t| %s\t| $%.2f\n" "$id" "$name" "$quantity" "$price"
+    done < inventory.txt
+
+    read -p "Press Enter to continue..."
+}
+
 
 while true
 do
@@ -30,8 +54,7 @@ do
     echo "1. View Products"
     echo "2. Price Check"
     echo "3. Check Out"
-    echo "4. Subscription"
-    echo "5. Return to Main Menu"
+    echo "4. Return to Main Menu"
     read choice
 
     case $choice in
@@ -39,26 +62,23 @@ do
             echo "Displaying products..."
             # Placeholder for product viewing logic
             sleep 2
+            display_products
             ;;
         2)
-            echo "Checking prices..."
-            # Placeholder for price checking logic
             sleep 2
+            ./pricecheck
             ;;
 
         3)
             echo "Proceeding to checkout..."
-            # C code for checkout
             sleep 2
+            ./checkout
             ;;
         
         4)
-            echo "Please enter your phone number"
-            ;;
-
-        5)
             break
             ;;
+
         *) echo "Please choose a valid option."
             ;;
     esac
