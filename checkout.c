@@ -42,6 +42,7 @@ void display_live_receipt(long long int new_id, char* name, float price) {
 void* scanner_thread(void* arg) {
     long long int id; // Item ID input by user
     char line[200]; // Buffer to read lines from inventory file
+    char input_buffer[100]; // Buffer to hold the raw input line
 
     // reset live receipt file
     FILE *receipt = fopen("receipt_live.txt", "w"); // Open receipt file for writing
@@ -50,7 +51,15 @@ void* scanner_thread(void* arg) {
     // continually scan items until checkout is done
     while (checkout_active) {
         printf("\nEnter Item ID (0 to finish): "); // takes input, if 0, checkout is done
-        scanf("%lld", &id);  // scans input
+        // 1. Read the WHOLE line from the keyboard/scanner
+        if (fgets(input_buffer, sizeof(input_buffer), stdin) == NULL) continue;
+
+        // 2. Extract the long long ID from that line
+        // If sscanf fails to find a number at the start, skip this input
+        if (sscanf(input_buffer, "%lld", &id) != 1) {
+            printf("[ERROR] Invalid input. Please scan a numeric barcode.\n");
+            continue;
+        }
 
         if (id == 0) { // if id = 0, that means user is done checking out
             pthread_mutex_lock(&lock); // Lock before changing shared variable
