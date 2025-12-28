@@ -60,18 +60,17 @@ do
     case $choice in
         1)
             echo "Displaying products..."
-            # Placeholder for product viewing logic
-            sleep 2
+            sleep 1
             display_products
             ;;
         2)
-            sleep 2
+            sleep 1
             ./pricecheck
             ;;
 
         3)
             echo "Proceeding to checkout..."
-            sleep 2
+            sleep 1
             ./checkout
             ;;
         
