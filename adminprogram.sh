@@ -224,28 +224,58 @@ do
             ;;
         10)
             log_action "Viewing Memory Status" 
-            echo -e "Viewing available disk space\n"
-            df -h . 
-            echo -e "\n\n"
-            echo -e "Viewing size of current directory\n"
-            du -sh .
-            echo -e "\n\n"
+            while true; do
+                clear
+                echo "========================================"
+                echo "        Viewing System Resources        "
+                echo "========================================"
+                echo "1. View Disk Space"
+                echo "2. View Current Directory Size"
+                echo "3. View System RAM Usage"
+                echo "4. Memory map of current process"
+                echo "5. View Process Dependencies (Shared Libs)"
+                echo "6. Go Back to Admin Dashboard"
+                echo "========================================"
+                read -p "Select a Metric to View: " sub_option
 
-            echo -e "System RAM Usage\n"
-            free -h | grep -E "total|Mem"
-            echo -e "\n\n"
+                case $sub_option in
+                    1)
+                        echo -e "\nViewing Disk Space"
+                        df -h .
+                        ;;
+                    2)
+                        echo -e "\nCurrent Directory Size"
+                        du -sh .
+                        ;;
+                    3)
+                        echo -e "\nViewing System RAM Usage"
+                        free -h | grep -E "total|Mem"
+                        ;;
+                    4)
+                        echo -e "\nViewing Memory map of current process (Process ID: $$)"
+                        echo "Displaying virtual memory addresses:"
+                        pmap $$ | head -n 10
+                        echo "...(truncated)..."
+                        ;;
+                    5)
+                        echo -e "\nViewing shared libraries"
+                        echo "Shared libraries required by /bin/bash:"
+                        ldd /bin/bash | head -n 10
+                        echo "...(truncated)..."
+                        ;;
+                    6)
+                        break 
+                        ;;
+                    *)
+                        echo -e "\n[ERROR] Invalid Selection."
+                        ;;
+                esac
 
-            echo -e "Memory map of current process (PID: $$):\n"
-            # pmap shows the hex addresses of memory segments
-            pmap $$ | head -n 10 
-            echo "...(truncated)..."
-            echo -e "\n\n"
-
-            # check dependencies of current bash (process)
-            echo -e "\nDependencies of current bash process:\n"
-            ldd /bin/bash | head -n 5
-            echo "...(truncated)..."
-            echo -e "\n\n"
+                if [ "$sub_option" -ne 6 ]; then
+                    echo -e "\nPress Enter to return to Health Menu..."
+                    read temp
+                fi
+            done
 
         ;;
         11)
