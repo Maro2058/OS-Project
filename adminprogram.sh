@@ -1,12 +1,27 @@
 #!/bin/bash
-
+LOG_FILE="./system_logs.txt"
 
 handle_alert() {
     echo -e "\n[ALERT] A Customer has requested emergency assistance!"
 }
 
+log_action() {
+    local message="$1"
+    local timestamp=$(date "+%Y-%m-%d %H:%M:%S")
+    # Appends the log entry to the file
+    echo "[$timestamp] [ADMIN] $message" >> "$LOG_FILE"
+}
+
 addItem(){
     read -p "Enter ID: " ID
+    # Check if ID already exists
+    if grep -q "^$ID:" inventory.txt; then
+        log_action "[ERROR] Item ID $ID already exists! Please use a unique ID."
+        echo -e "\n[ERROR] Item ID $ID already exists! Please use a unique ID."
+        return # Exit the function early
+    fi
+
+    
     read -p "Enter Name: " Name
     read -p "Enter Quantity: " Quantity
     read -p "Enter Price: " Price
@@ -17,6 +32,7 @@ addItem(){
         # Price is a float
     if [[ "$ID" =~ [0-9]+$ ]] && [[ "$Quantity" =~ [0-9]+$ ]] && [[ "$Price" =~ ^-?[0-9]+(\.[0-9]+)?$ ]]; then
         echo "$ID:$Name:$Quantity:$Price" >> inventory.txt
+        log_action "Added item [ID : $ID] [Name: $Name] [Quantity: $Quantity] [Price: $Price]"
     else
         echo -e "Invalid Input. Please make sure
             1. ID is unique and an integer
@@ -29,6 +45,7 @@ addItem(){
 # Searches by name or ID
 InventorySearch(){
 
+    log_action "Inventory Searched"
     local -n result="$1"
 
     read -p "Enter Name or ID of item you want to find: (Optional) " input
@@ -75,6 +92,7 @@ removeItem() {
     # |d = delete
     sed -i "\|^${result}$|d" inventory.txt
     echo "Item removed: ${result}"
+    log_action "Removed item: ${result}"
 }
 
 restockItem(){
@@ -101,6 +119,8 @@ restockItem(){
     $1 == id { $3 = $3 + qty }
     { print }
     ' inventory.txt
+
+    log_action "Restocked item: $result by $Increment"
 }
 
 trap handle_alert SIGUSR1
@@ -112,21 +132,22 @@ do
     echo "========================================"
     echo "   STORE ADMIN DASHBOARD (Logged In)"
     echo "========================================"
-    echo "1. View System Logs (History)"
-    echo "2. Manage Users/Employees"
-    echo "3. Manage Products (Inventory)"
-    echo "4. Manage Shifts (Schedule)"
-    echo "5. SYSTEM MONITOR (Processes) [Tech Req]"
-    echo "6. WAREHOUSE STATUS (Disk/Mem) [Tech Req]"
+    echo "1. Add New Product"
+    echo "2. Remove Products"
+    echo "3. Search Products"
+    echo "4. Restock Products "
+    echo "5. SYSTEM MONITOR (Processes)"
+    echo "6. View Live Logs"
     echo "7. EMERGENCY STOP (Signal Broadcast)"
     echo "8. Generate Zombie and Orphan Processes"
     echo "9. Kill all Zombie and Orphan Processes"
-    echo "10. Return to Main Menu"
+    echo "10. Viewing Memory Status"
+    echo "11. Return to Main Menu"
     read option
 
 
     case $option in
-        1) 
+        1)
             addItem
         ;;
         2) 
@@ -141,16 +162,30 @@ do
             restockItem
         ;;
         5) 
+            log_action "System Monitor was called"
             ps -ef | grep -E "main_menu.sh|userprogram.sh|adminprogram.sh|daemon_stock_monitor.sh|generatezombie|generateorphan" | grep -v grep
-            read -p "Press Enter to continue..."
+            
             ;;
-        6) ;;
-        7) ;;
+
+
+        6) 
+            log_action "Viewing logs live"
+            ./viewlogs.sh
+            ;;
+
+
+        7)  # Kill the entire process group (including this script and all children)
+            log_action "Emergency Stop Requested"
+            echo "Killing all background sub-processes..."
+            # We use $(jobs -p) to kill only background processes started by this script.
+            kill -9 $(jobs -p) 2>/dev/null
+            ;;
         8) 
             ./generatezombie &
             ./generateorphan &
+            log_action "Zombie and Orphan processes generated in the background"
             echo -e "\n[INFO] Zombie and Orphan processes generated in the background."
-            read -p "Press Enter to continue..."
+            
             ;;
         9) 
             # Kill Zombie Processes and Orphan Processes
@@ -164,6 +199,7 @@ do
                 echo -e "\n[INFO] No zombie processes found."
             else
                 kill -9 $zombie_parents > /dev/null 2>&1
+                log_action "Zombie processes killed"
                 echo -e "\n[INFO] Killed all zombie processes."
             fi
 
@@ -179,13 +215,41 @@ do
                 echo -e "\n[INFO] No orphan processes found."
             else
                 kill -9 $orphan_pids > /dev/null 2>&1
+                log_action "Orphan processes killed"
                 echo -e "\n[INFO] Killed all orphan processes."
             fi
 
-            read -p "Press Enter to continue..."
+        
             
             ;;
         10)
+            log_action "Viewing Memory Status" 
+            echo -e "Viewing available disk space\n"
+            df -h . 
+            echo -e "\n\n"
+            echo -e "Viewing size of current directory\n"
+            du -sh .
+            echo -e "\n\n"
+
+            echo -e "System RAM Usage\n"
+            free -h | grep -E "total|Mem"
+            echo -e "\n\n"
+
+            echo -e "Memory map of current process (PID: $$):\n"
+            # pmap shows the hex addresses of memory segments
+            pmap $$ | head -n 10 
+            echo "...(truncated)..."
+            echo -e "\n\n"
+
+            # check dependencies of current bash (process)
+            echo -e "\nDependencies of current bash process:\n"
+            ldd /bin/bash | head -n 5
+            echo "...(truncated)..."
+            echo -e "\n\n"
+
+        ;;
+        11)
+            log_action "Returned to Main Menu"
             break
             ;;
 

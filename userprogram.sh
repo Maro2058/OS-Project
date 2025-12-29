@@ -1,5 +1,16 @@
 #!/bin/bash
 
+LOG_FILE="./system_logs.txt"
+
+log_action() {
+    local message="$1"
+    local timestamp=$(date "+%Y-%m-%d %H:%M:%S")
+    # Appends the log entry to the file
+    echo "[$timestamp] [USER] $message" >> "$LOG_FILE"
+}
+
+
+
 call_for_assistance() {
     echo -e "\n\n!!! EMERGENCY ASSISTANCE REQUESTED !!!"
     echo "Alerting Store Manager..."
@@ -8,6 +19,7 @@ call_for_assistance() {
     # This satisfies "Process communication through signals"
     pkill -SIGUSR1 -f "adminprogram.sh" # Send SIGUSR1 to adminprogram.sh process
     
+    log_action "Emergency Assistance Requested"
     echo "Manager has been notified."
     sleep 2
     
@@ -59,22 +71,26 @@ do
 
     case $choice in
         1)
+            log_action "Viewed Products"
             echo "Displaying products..."
             sleep 1
             display_products
             ;;
         2)
+            log_action "Performed Price Check"
             sleep 1
             ./pricecheck
             ;;
 
         3)
+            log_action "Performed Check Out"
             echo "Proceeding to checkout..."
             sleep 1
             ./checkout
             ;;
         
         4)
+            log_action "Returned to Main Menu"
             break
             ;;
 

@@ -34,6 +34,8 @@ do
         # Skip empty lines to prevent errors
         if [ -z "$id" ]; then continue; fi
 
+        # Checks if a low stock item has been removed from inventory, so it removes it from the low_stock item list as well
+
         # 3. The Condition (Check if quantity < 5)
         if [ "$quantity" -lt $cutoff ]; then
             if ! grep -q "^$id:$name:" "$LOW_STOCK_ITEMS"; then
@@ -50,6 +52,18 @@ do
             fi
         fi
     done < ./inventory.txt  # <--- This feeds the file into the inner loop
+
+
+    while IFS=':' read -r id name quantity price
+    do
+        if [ -z "$id" ]; then continue; fi
+
+        if ! grep -q "^$id:$name:" ./inventory.txt; then
+            echo "[$now] INFO: $name removed from inventory" >> "$LOG_FILE"
+            grep -v "^$id:$name:" "$LOW_STOCK_ITEMS" > "$tempfile" && mv "$tempfile" "$LOW_STOCK_ITEMS"
+        fi
+       
+    done < $LOW_STOCK_ITEMS
 
     # Sleep for 5 seconds before checking again
     sleep 5

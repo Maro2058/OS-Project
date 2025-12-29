@@ -30,3 +30,42 @@ Stock Daemon Started...
 Stock Daemon Started...
 Stock Daemon Started...
 [18:59:33] ALERT: Low stock for 'Pepsi' | 3 left.
+Stock Daemon Started...
+[02:45:36] ALERT: Low stock for 'Airpods' | 4 left.
+[02:46:52] INFO: Airpods removed from inventory
+Stock Daemon Started...
+Stock Daemon Started...
+[2025-12-29 03:05:54] [USER] Performed Price Check
+[2025-12-29 03:06:07] [USER] Emergency Assistance Requested
+[2025-12-29 03:06:10] [USER] Returned to Main Menu
+Stock Daemon Started...
+[2025-12-29 04:05:41] [Main Menu] [amr] Performed Login
+Stock Daemon Started...
+[2025-12-29 04:05:52] [ADMIN] Viewing logs live
+[2025-12-29 04:06:12] [Main Menu] [amr] Performed Login
+[2025-12-29 04:06:21] [ADMIN] Viewing Memory Status
+[2025-12-29 04:06:46] [ADMIN] Returned to Main Menu
+[2025-12-29 04:06:47] [Main Menu] Exitted Supermarket OS
+Stock Daemon Started...
+[2025-12-29 04:06:57] [Main Menu] Performed Login
+[2025-12-29 04:07:08] [USER] Viewed Products
+[2025-12-29 04:07:13] [USER] Performed Price Check
+[2025-12-29 04:07:18] [USER] Returned to Main Menu
+[2025-12-29 04:07:23] [Main Menu] Performed Login
+[2025-12-29 04:07:24] [USER] Emergency Assistance Requested
+[2025-12-29 04:07:27] [USER] Returned to Main Menu
+[2025-12-29 04:07:29] [Main Menu] Exitted Supermarket OS
+[2025-12-29 04:07:42] [ADMIN] Returned to Main Menu
+[2025-12-29 04:07:43] [Main Menu] Exitted Supermarket OS
+Stock Daemon Started...
+[2025-12-29 04:09:00] [Main Menu] [amr] Performed Login
+[2025-12-29 04:09:05] [ADMIN] System Monitor was called
+[2025-12-29 04:09:44] [ADMIN] Viewing Memory Status
+[2025-12-29 04:10:58] [ADMIN] Returned to Main Menu
+[2025-12-29 04:11:01] [Main Menu] [amr] Performed Login
+[2025-12-29 04:11:08] [ADMIN] System Monitor was called
+[2025-12-29 04:11:34] [ADMIN] Returned to Main Menu
+[2025-12-29 04:11:43] [Main Menu] [amr] Performed Login
+[2025-12-29 04:11:50] [ADMIN] Viewing Memory Status
+[2025-12-29 04:12:00] [ADMIN] Returned to Main Menu
+[2025-12-29 04:12:01] [Main Menu] Exitted Supermarket OS

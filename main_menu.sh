@@ -1,5 +1,5 @@
 #!/bin/bash
-
+LOG_FILE="./system_logs.txt"
 # Creating a main menu for Supermarket OS
 # This script will display a simple text-based menu
 
@@ -28,6 +28,13 @@ fi
 
 sleep 1 # Just for effect
 
+log_action() {
+    local message="$1"
+    local timestamp=$(date "+%Y-%m-%d %H:%M:%S")
+    # Appends the log entry to the file
+    echo "[$timestamp] [Main Menu] $message" >> "$LOG_FILE"
+}
+
 login_user() {
     local username=$1
     local password=$2
@@ -35,10 +42,12 @@ login_user() {
     if  grep -q "$username:$password" ./admins.txt 
     then
         clear
+        log_action "[$username] Performed Login"
         echo "Login successful! Welcome, $username."
         sleep 2
         ./adminprogram.sh
     else
+        log_action "[$username] Failed Login"
         echo "Login failed! Invalid username or password."
     fi
 }
@@ -57,6 +66,7 @@ do
 
     case $choice in
         1)
+            log_action "Performed Login"
             ./userprogram.sh
             ;;
         2) 
@@ -67,11 +77,12 @@ do
             login_user $username $password
             ;;
         3)  
+            log_action "Exitted Supermarket OS"
             pkill -f daemon_stock_monitor.sh
             # 'kill 0' sends a kill signal to every process in the current "Process Group".
             # Since your main menu launched the daemon, they are in the same group.
             echo "Shutting down Supermarket OS..."
-            kill 0
+            kill -9 -$$
             ;;
         *) echo "Please choose a valid option."
             ;;
